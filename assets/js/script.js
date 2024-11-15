@@ -1,3 +1,11 @@
+/*!
+ * File: Script.js
+ * Author: Anas Akbar Saqi
+ * Description: Main JavaScript page for Anas Akbar Saqi's portfolio.
+ * License: GPLv3 (or your preferred license)
+ * Date: November 2024
+ */
+
 (function ($) {
   "use strict";
 
@@ -379,7 +387,8 @@ if (localStorage.theme === "dark") {
   $("#light_theme").addClass("active");
 }
 
-// For Number Count
+// For Number Cont
+
 
   document.addEventListener("DOMContentLoaded", () => {
     // Function to animate counter from 0 to target number
@@ -419,4 +428,3 @@ if (localStorage.theme === "dark") {
     const observer = new IntersectionObserver(startCounting, options);
     observer.observe(document.querySelector(".facts"));
   });
-
