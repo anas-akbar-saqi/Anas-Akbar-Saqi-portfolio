@@ -379,48 +379,44 @@ if (localStorage.theme === "dark") {
   $("#light_theme").addClass("active");
 }
 
-// For Whatsapp msg
+// For Number Count
 
-window.onload = function () {
-  setTimeout(function () {
-    var url =
-      "https://wati-integration-prod-service.clare.ai/v2/watiWidget.js?90046";
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.async = true;
-    s.src = url;
-    var options = {
-      enabled: true,
-      chatButtonSetting: {
-        backgroundColor: "#00e785",
-        ctaText: "Chat with Anas",
-        borderRadius: "25",
-        marginLeft: "0",
-        marginRight: "20",
-        marginBottom: "20",
-        ctaIconWATI: false,
-        position: "right",
-      },
-      brandSetting: {
-        brandName: "ANAS RAJPUT",
-        brandSubTitle: "undefined",
-        brandImg:
-          "https://media.licdn.com/dms/image/v2/D4D03AQFwcNaWIV_Emw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730449874520?e=1736985600&v=beta&t=T58uIXprOlHj5y0KRQJ8M3odJ1c6zyQmUev5xL8IDA4",
-        welcomeText: "Hi there!\nHow can I help you?",
-        messageText: "Hello, %0A I have a question about {{page_link}}",
-        backgroundColor: "#00e785",
-        ctaText: "Chat with Anas",
-        borderRadius: "25",
-        autoShow: false,
-        phoneNumber: "923454379166",
-      },
+  document.addEventListener("DOMContentLoaded", () => {
+    // Function to animate counter from 0 to target number
+    function animateCounter(element, target) {
+      let count = 0;
+      const speed = 100; // Increase this value to slow down the animation
+      const increment = Math.ceil(target / speed);
+      
+      const updateCount = () => {
+        count += increment;
+        if (count > target) count = target;
+        element.innerText = count;
+        if (count < target) {
+          requestAnimationFrame(updateCount);
+        }
+      };
+      
+      updateCount();
+    }
+
+    // Function to start animation when the element is in viewport
+    const startCounting = (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counterItems = document.querySelectorAll(".counter");
+          counterItems.forEach(item => {
+            const targetValue = parseInt(item.innerText);
+            animateCounter(item, targetValue);
+          });
+          observer.unobserve(entry.target); // Stop observing once animation starts
+        }
+      });
     };
 
-    s.onload = function () {
-      CreateWhatsappChatWidget(options);
-    };
+    // Setting up Intersection Observer
+    const options = { threshold: 0.5 };
+    const observer = new IntersectionObserver(startCounting, options);
+    observer.observe(document.querySelector(".facts"));
+  });
 
-    var x = document.getElementsByTagName("script")[0];
-    x.parentNode.insertBefore(s, x);
-  }, 2000); // Delay of 2000 milliseconds (3 seconds)
-};
